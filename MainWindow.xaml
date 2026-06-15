@@ -1,0 +1,85 @@
+<Window x:Class="SveshofReff.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Свежов - Реферальная система" Height="600" Width="950"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая колонка: Добавление пользователя -->
+        <Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="0,0,10,0">
+            <StackPanel>
+                <TextBlock Text="Новый пользователь" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                
+                <TextBlock Text="ФИО:" Margin="0,5,0,0"/>
+                <TextBox Text="{Binding NewFullName, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,5"/>
+
+                <TextBlock Text="Телефон:" Margin="0,5,0,0"/>
+                <TextBox Text="{Binding NewPhone, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,5"/>
+
+                <TextBlock Text="Код пригласившего (опц.):" Margin="0,5,0,0"/>
+                <TextBox Text="{Binding NewInviterCode, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,15"/>
+
+                <Button Content="Добавить" Command="{Binding AddUserCommand}" Padding="5" Margin="0,0,0,5" Background="#007ACC" Foreground="White"/>
+                <Button Content="Очистить форму" Command="{Binding ClearFormCommand}" Padding="5"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Центральная колонка: Список пользователей и поиск -->
+        <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="0,0,10,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBox Width="200" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0"/>
+                    <Button Content="Найти" Command="{Binding SearchCommand}" Padding="10,0"/>
+                </StackPanel>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" 
+                          AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="0,0,0,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+                        <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"/>
+                        <DataGridTextColumn Header="Телефон" Binding="{Binding PhoneNumber}"/>
+                        <DataGridTextColumn Header="Реф. Код" Binding="{Binding ReferralCode}"/>
+                        <DataGridTextColumn Header="Баллы" Binding="{Binding PointsBalance}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Grid.Row="2" Content="Удалить выбранного пользователя" Command="{Binding DeleteUserCommand}" Background="#DC3545" Foreground="White" Padding="10,5" HorizontalAlignment="Left"/>
+            </Grid>
+        </Border>
+
+        <!-- Правая колонка: Детали выбранного пользователя -->
+        <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="1" Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Кого пригласил (1 ур.)" FontWeight="Bold" Margin="0,0,0,5"/>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Referrals}" DisplayMemberPath="FullName" Margin="0,0,0,10"/>
+
+                <TextBlock Grid.Row="2" Text="История транзакций" FontWeight="Bold" Margin="0,0,0,5"/>
+                <DataGrid Grid.Row="3" ItemsSource="{Binding Transactions}" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding TransactionDate}"/>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding OperationType}"/>
+                        <DataGridTextColumn Header="Баллы" Binding="{Binding PointsAmount}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

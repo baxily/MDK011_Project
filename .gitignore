@@ -1,0 +1,34 @@
+## Ignore Visual Studio temporary files, build results, and SQLite database files.
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPS/
+[Rr]elease/
+[Rr]eleasePS/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# SQLite database
+*.db
+*.db-shm
+*.db-wal
+svezhov.db
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
